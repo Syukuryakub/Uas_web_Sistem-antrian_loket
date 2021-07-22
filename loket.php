@@ -1,75 +1,138 @@
-<style type="text/css"
->
-		::selection { background-color: #E13300; color: white; }
-	::-moz-selection { background-color: #E13300; color: white; }
+	<div class="row">
+		<div class="col-md-12">
+			<?php
+				echo $this->session->flashdata('pesan');
+			?>
+			<div class="box">
+				<div class="loket">
+					Loket
+				</div>
+				<div class="agenda">
+					<div class="col-md-3"></div>
+					<div class="row">
+						<div class="col-md-6">
+							<center>
+								<a href="#add" data-toggle="modal" class="btn btn-primary">Tambah Loket</a>
+							</center>
+							<br>
+							<div class="table-responsive">
+								<table class="table table-bordered">
+									<tr>
+										<th width="3px">No</th>
+										<th width="200px;">Nama Loket</th>
+                    <th width="20px;">Status</th>
+										<th width="110px">Aksi</th>
+									</tr>
+									<?php
+									$no=0;
+									foreach ($hasil as $row) { 
+										$no++;
+										?>
+									<tr style="text-align:center;">
+										<td><?php echo $no; ?></td>
+										<td>Loket <?php echo $row->loket; ?></td>
+                    <td><?php if($row->status == 0){echo "Kosong";}else{echo "Sedang digunakan";} ?></td>
+										<td><a href="#<?php echo $row->id_loket; ?>" data-toggle="modal" class="btn btn-success"><i class="glyphicon glyphicon-pencil"></i></a>&nbsp;<a href="<?php echo site_url('admin/del_loket/'.$row->id_loket); ?>" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></a></td>
+									</tr>
 
-	body {
-		background-color: #fff;
-		margin: 40px;
-		font: 13px/20px normal Helvetica, Arial, sans-serif;
-		color: #4F5155;
-	}
+									<!-- Modal -->
+<div id="<?php echo $row->id_loket; ?>" class="modal fade" role="dialog">
+  <div class="modal-dialog">
 
-	a {
-		color: #003399;
-		background-color: transparent;
-		font-weight: normal;
-	}
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Edit Loket</h4>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="<?php echo site_url('admin/edit_loket/'.$row->id_loket); ?>" enctype="multipart/form-data">
+          <div class="col-md-3"></div>
+          <div class="col-md-6">
+            <label for="sel1">Nama Loket</label>
+              <input type="text" name="loket" class="form-control" pattern="[0-9A-Za-z .,-]{0,50}" value="<?php echo $row->loket; ?>" required="" maxlength="50">
+            <label for="sel1">Status Loket</label>
+            <?php
+            if($row->status == 0){
+              $a = "selected";
+              $b ="";
+            }
+            else{
+              $a = "";
+              $b="selected";
+            }
+            ?>
+              <select name="status" class="form-control">
+                <option value="0" <?php echo $a; ?>>Kosong</option>
+                <option value="1" <?php echo $b; ?>>Sedang digunakan</option>
+              </select>
+          </div>
+          <div class="col-md-3"></div>
+          <div class="col-md-12">
+            <center>
+            	<br>
+              <button type="submit" class="btn btn-primary" name="s_buku">Simpan</button>
+              <button type="reset" class="btn btn-danger">Reset</button>
+            </center> 
+           </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
 
-	h1 {
-		color: #444;
-		background-color: transparent;
-		border-bottom: 1px solid #D0D0D0;
-		font-size: 19px;
-		font-weight: normal;
-		margin: 0 0 14px 0;
-		padding: 14px 15px 10px 15px;
-	}
+  </div>
+</div>
 
-	code {
-		font-family: Consolas, Monaco, Courier New, Courier, monospace;
-		font-size: 12px;
-		background-color: #f9f9f9;
-		border: 1px solid #D0D0D0;
-		color: #002166;
-		display: block;
-		margin: 14px 0 14px 0;
-		padding: 12px 10px 12px 10px;
-	}
-
-	#body {
-		margin: 0 15px 0 15px;
-	}
-
-	p.footer {
-		text-align: right;
-		font-size: 11px;
-		border-top: 1px solid #D0D0D0;
-		line-height: 32px;
-		padding: 0 10px 0 10px;
-		margin: 20px 0 0 0;
-	}
-
-	#container {
-		margin: 10px;
-		border: 1px solid #D0D0D0;
-		box-shadow: 0 0 8px #D0D0D0;
-	}
-</style>
-<div id="container">
-	<h1>Welcome to Loket <?php echo $instansi->instansi; ?><!</h1>
-
-	<div id="body">
-		<p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
-
-		<p>If you would like to edit this page you'll find it located at:</p>
-		<code>application/views/welcome_message.php</code>
-
-		<p>The corresponding controller for this page is found at:</p>
-		<code>application/controllers/Welcome.php</code>
-
-		<p>If you are exploring CodeIgniter for the very first time, you should start by reading the <a href="user_guide/">User Guide</a>.</p>
+									<?php } ?>
+								</table>
+							</div>
+							<?php echo $halaman; ?>
+						</div>	
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 
-	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds. <?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?></p>
+
+<!-- Modal -->
+<div id="add" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Tambah Loket</h4>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="<?php echo site_url('admin/add_loket/'); ?>" enctype="multipart/form-data">
+          <div class="col-md-3"></div>
+          <div class="col-md-6">
+            <label for="sel1">Nama Loket</label>
+              <input type="text" name="loket" class="form-control" pattern="[0-9A-Za-z .,-]{0,50}" placeholder="Example: A, B, C OR 1, 2, 3" required="" maxlength="50">
+            <label for="sel1">Status Loket</label>
+              <select name="status" class="form-control">
+                <option value="0">Kosong</option>
+                <option value="1">Sedang digunakan</option>
+              </select>
+          </div>
+          <div class="col-md-3"></div>
+          <div class="col-md-12">
+            <center>
+            	<br>
+              <button type="submit" class="btn btn-primary" name="s_buku">Simpan</button>
+              <button type="reset" class="btn btn-danger">Reset</button>
+            </center> 
+           </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+            <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+      </div>
+    </div>
+
+  </div>
 </div>
