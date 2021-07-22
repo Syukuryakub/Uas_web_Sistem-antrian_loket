@@ -7,7 +7,7 @@ Nim   : 311910696
 
 Matkul : Pemrograman Web
 
-Link Laporan Uas Pemrograman web 
+Link Laporan Uas Pemrograman web https://drive.google.com/file/d/1QTHM70Cwq_bHFbF-ucxcCUi_1ocaiIjg/view?usp=sharing
 
 Link Youtube Uas 
 
